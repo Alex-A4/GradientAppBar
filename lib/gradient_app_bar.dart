@@ -391,11 +391,11 @@ class _GradientAppBarState extends State<GradientAppBar> {
   static const double _defaultElevation = 4.0;
 
   void _handleDrawerButton() {
-    Scaffold.of(context).openDrawer();
+    Scaffold.of(context)?.openDrawer();
   }
 
   void _handleDrawerButtonEnd() {
-    Scaffold.of(context).openEndDrawer();
+    Scaffold.of(context)?.openEndDrawer();
   }
 
   @override
@@ -404,7 +404,7 @@ class _GradientAppBarState extends State<GradientAppBar> {
     assert(debugCheckHasMaterialLocalizations(context));
     final ThemeData themeData = Theme.of(context);
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
-    final ScaffoldState scaffold = Scaffold.of(context, nullOk: true);
+    final ScaffoldState scaffold = Scaffold.of(context);
     final ModalRoute<dynamic> parentRoute = ModalRoute.of(context);
 
     final bool hasDrawer = scaffold?.hasDrawer ?? false;
@@ -418,12 +418,12 @@ class _GradientAppBarState extends State<GradientAppBar> {
     IconThemeData actionsIconTheme = widget.actionsIconTheme ??
         appBarTheme.actionsIconTheme ??
         overallIconTheme;
-    TextStyle centerStyle = widget.textTheme?.title ??
-        appBarTheme.textTheme?.title ??
-        themeData.primaryTextTheme.title;
-    TextStyle sideStyle = widget.textTheme?.body1 ??
-        appBarTheme.textTheme?.body1 ??
-        themeData.primaryTextTheme.body1;
+    TextStyle centerStyle = widget.textTheme?.headline6 ??
+        appBarTheme.textTheme?.headline6 ??
+        themeData.primaryTextTheme.headline6;
+    TextStyle sideStyle = widget.textTheme?.bodyText2 ??
+        appBarTheme.textTheme?.bodyText2 ??
+        themeData.primaryTextTheme.bodyText2;
 
     if (widget.toolbarOpacity != 1.0) {
       final double opacity =
@@ -633,8 +633,10 @@ class _FloatingGradientAppBarState extends State<_FloatingGradientAppBar> {
   }
 
   RenderSliverFloatingPersistentHeader _headerRenderer() {
-    return context.ancestorRenderObjectOfType(
-        const TypeMatcher<RenderSliverFloatingPersistentHeader>());
+    return context
+        .findAncestorRenderObjectOfType<RenderSliverFloatingPersistentHeader>();
+    // return context.ancestorRenderObjectOfType(
+    //     const TypeMatcher<RenderSliverFloatingPersistentHeader>());
   }
 
   void _isScrollingListener() {
@@ -753,8 +755,8 @@ class _SliverGradientAppBarDelegate extends SliverPersistentHeaderDelegate {
             : flexibleSpace,
         bottom: bottom,
         elevation: forceElevated ||
-                overlapsContent ||
-                (pinned && shrinkOffset > maxExtent - minExtent)
+            overlapsContent ||
+            (pinned && shrinkOffset > maxExtent - minExtent)
             ? elevation ?? 4.0
             : 0.0,
         gradient: gradient,
@@ -768,7 +770,7 @@ class _SliverGradientAppBarDelegate extends SliverPersistentHeaderDelegate {
         shape: shape,
         toolbarOpacity: toolbarOpacity,
         bottomOpacity:
-            pinned ? 1.0 : (visibleMainHeight / _bottomHeight).clamp(0.0, 1.0),
+        pinned ? 1.0 : (visibleMainHeight / _bottomHeight).clamp(0.0, 1.0),
       ),
     );
     return floating ? _FloatingGradientAppBar(child: appBar) : appBar;
@@ -919,7 +921,7 @@ class SliverGradientAppBar extends StatefulWidget {
         assert(pinned != null),
         assert(snap != null),
         assert(floating || !snap,
-            'The "snap" argument only makes sense for floating app bars.'),
+        'The "snap" argument only makes sense for floating app bars.'),
         super(key: key);
 
   /// A widget to display before the [title].
@@ -1200,11 +1202,11 @@ class _SliverGradientAppBarState extends State<SliverGradientAppBar>
   Widget build(BuildContext context) {
     assert(!widget.primary || debugCheckHasMediaQuery(context));
     final double topPadding =
-        widget.primary ? MediaQuery.of(context).padding.top : 0.0;
+    widget.primary ? MediaQuery.of(context).padding.top : 0.0;
     final double collapsedHeight =
-        (widget.pinned && widget.floating && widget.bottom != null)
-            ? widget.bottom.preferredSize.height + topPadding
-            : null;
+    (widget.pinned && widget.floating && widget.bottom != null)
+        ? widget.bottom.preferredSize.height + topPadding
+        : null;
 
     return MediaQuery.removePadding(
       context: context,

@@ -11,8 +11,13 @@ It works just like the normal AppBar. Also with actions, back buttons, titles. S
 
 
 ## Getting Started
+This fork should solve the problem with new versions of Flutter since 1.26.
 
-1. Depend on it by adding this to your pubspec.yaml file: ```gradient_app_bar: ^0.1.3```
+1. Depend on it by adding this to your pubspec.yaml file: 
+```
+gradient_app_bar:
+    git: https://github.com/Alex-A4/GradientAppBar
+```yaml
 
 2. Import it: ```import 'package:gradient_app_bar/gradient_app_bar.dart'```
 
